@@ -1,7 +1,8 @@
+import { serviceLogger } from './config/logger.config';
 import server from './server';
 
 process.on('unhandledRejection', (err) => {
-  console.error(err);
+  serviceLogger('Un Handled Server Rejection', err);
   process.exit(1);
 });
 
@@ -12,16 +13,17 @@ const startServer = async () => {
       for (const signal of ['SIGINT', 'SIGTERM']) {
         process.on(signal, () =>
           server.close().then((err) => {
-            console.log(`close application on ${signal}`);
+            serviceLogger(`Close application on ${signal}`, err);
             process.exit(err ? 1 : 0);
           })
         );
       }
     }
 
+    await server.ready();
     await server.listen({ port });
   } catch (err) {
-    console.error(err);
+    serviceLogger('Failed to start server', err);
   }
 };
 

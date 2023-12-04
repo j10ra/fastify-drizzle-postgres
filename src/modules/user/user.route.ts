@@ -8,7 +8,7 @@ async function userRouter(fastify: FastifyInstance) {
   fastify.route({
     method: 'POST',
     url: '/login',
-    schema: loginSchema as any,
+    schema: loginSchema,
     handler: login,
   });
 }

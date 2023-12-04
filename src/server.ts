@@ -1,10 +1,12 @@
 import fastify from 'fastify';
-import pino from 'pino';
-import loadConfig from './config';
-import userRouter from './modules/user/user.route';
-import { loginSchema } from './modules/user/user.schema';
+import envConfig from './config/env.config';
+import registerSwagger from './config/swagger.config';
+import registerRoutes from './routes';
+import { errorHandler } from './middleware/errorHandler';
+import { registerServiceLogger } from './middleware/logger';
+import getLoggerOptions from './config/logger.config';
 
-loadConfig();
+envConfig();
 
 const server = fastify({
   ajv: {
@@ -14,25 +16,16 @@ const server = fastify({
       useDefaults: true,
     },
   },
-  logger: pino({ level: process.env.LOG_LEVEL || 'info' }),
+  logger: getLoggerOptions(),
 });
 
 server.register(require('@fastify/formbody'));
-server.register(require('@fastify/cors'));
 server.register(require('@fastify/helmet'));
-// server.addSchema(loginSchema);
+server.register(require('@fastify/cors'));
 
-server.register(userRouter, { prefix: '/api/user' });
-// server.register(postRouter, { prefix: '/api/post' });
-
-server.setErrorHandler((error, request, reply) => {
-  server.log.error(error);
-  //   reply.status(500).send();
+server.get('/', (_request, reply) => {
+  reply.send({ name: 'fastify-api' });
 });
-
-// server.get('/', (_request, reply) => {
-//   reply.send({ name: 'fastify-api' });
-// });
 
 server.get('/health-check', async (_request, reply) => {
   try {
@@ -43,5 +36,11 @@ server.get('/health-check', async (_request, reply) => {
     reply.status(500).send();
   }
 });
+
+registerServiceLogger(server);
+registerSwagger(server);
+registerRoutes(server);
+
+server.setErrorHandler(errorHandler);
 
 export default server;
