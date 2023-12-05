@@ -3,6 +3,7 @@ import registerSwagger from './config/swagger.config';
 import registerRoutes from './routes';
 import { errorHandler } from './middleware/errorHandler';
 import { getLoggerOptions, registerServiceLogger } from './config/logger.config';
+import sequelize from './config/sequelize.config';
 
 const server = fastify({
   ajv: {
@@ -27,6 +28,7 @@ server.get('/health-check', async (_request, reply) => {
   try {
     // TODO: add db health check
     // await utils.healthCheck();
+
     reply.status(200).send();
   } catch (e) {
     reply.status(500).send();
@@ -38,5 +40,7 @@ registerRoutes(server);
 registerServiceLogger(server);
 
 server.setErrorHandler(errorHandler);
+
+sequelize;
 
 export default server;

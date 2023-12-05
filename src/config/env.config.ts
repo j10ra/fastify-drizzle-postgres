@@ -4,14 +4,15 @@ import envSchema from 'env-schema';
 import { z } from 'zod';
 import { zodToJsonSchema as s } from 'zod-to-json-schema';
 
-moduleAlias.addAliases({
-  '@/config': `${__dirname}/../config`,
-  '@/helpers': `${__dirname}/../helpers`,
-  '@/middleware': `${__dirname}/../middleware`,
-  '@/modules': `${__dirname}/../modules`,
-  '@/routes': `${__dirname}/../routes`,
-  '@/types': `${__dirname}/../types`,
-});
+moduleAlias.addAliases(
+  ['config', 'helpers', 'middleware', 'models', 'modules', 'routes', 'types', 'db'].reduce(
+    (acc, alias) => {
+      acc[`@/${alias}`] = `${__dirname}/../${alias}`;
+      return acc;
+    },
+    {}
+  )
+);
 
 export default function loadConfig(): void {
   const result = require('dotenv').config({
