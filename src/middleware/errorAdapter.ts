@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import { ServerError } from '../helpers/ServerError';
+import { ServerError } from '@/helpers/ServerError';
 
 // Middleware to convert errors to ServerError
 export default function errorAdapter(error: Error): ServerError {

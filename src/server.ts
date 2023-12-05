@@ -1,12 +1,8 @@
 import fastify from 'fastify';
-import envConfig from './config/env.config';
 import registerSwagger from './config/swagger.config';
 import registerRoutes from './routes';
 import { errorHandler } from './middleware/errorHandler';
-import { registerServiceLogger } from './middleware/logger';
-import getLoggerOptions from './config/logger.config';
-
-envConfig();
+import { getLoggerOptions, registerServiceLogger } from './config/logger.config';
 
 const server = fastify({
   ajv: {
@@ -37,9 +33,9 @@ server.get('/health-check', async (_request, reply) => {
   }
 });
 
-registerServiceLogger(server);
 registerSwagger(server);
 registerRoutes(server);
+registerServiceLogger(server);
 
 server.setErrorHandler(errorHandler);
 

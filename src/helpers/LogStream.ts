@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-class LogStreamGenerator {
+class LogStream {
   logBaseDir: string;
   streams: { [key: string]: fs.WriteStream };
 
@@ -10,7 +10,15 @@ class LogStreamGenerator {
     this.streams = {};
   }
 
-  getLogStream(type: string = 'default') {
+  prefix(type: string = 'default') {
+    // Provide a no-op function for non-production environments
+    if (process.env.NODE_ENV !== 'production') {
+      return {
+        write: () => {},
+        end: () => {},
+      };
+    }
+
     if (this.streams[type]) {
       return this.streams[type];
     }
@@ -26,8 +34,21 @@ class LogStreamGenerator {
     const logFilePath = path.join(logDirectory, `${type}-${day}.txt`);
     this.streams[type] = fs.createWriteStream(logFilePath, { flags: 'a' });
 
+    this.streams[type].on('error', (err) => {
+      console.error(`Error in LogStream for type ${type}:`, err);
+    });
+
     return this.streams[type];
+  }
+
+  closeAll() {
+    for (const type in this.streams) {
+      if (this.streams.hasOwnProperty(type)) {
+        this.streams[type].end();
+        delete this.streams[type];
+      }
+    }
   }
 }
 
-export default new LogStreamGenerator();
+export default new LogStream();
