@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodToJsonSchema as s } from 'zod-to-json-schema';
 
 moduleAlias.addAliases(
-  ['config', 'helpers', 'middleware', 'models', 'modules', 'routes', 'types', 'db'].reduce(
+  ['config', 'helpers', 'middleware', 'modules', 'routes', 'types', 'db'].reduce(
     (acc, alias) => {
       acc[`@/${alias}`] = `${__dirname}/../${alias}`;
       return acc;

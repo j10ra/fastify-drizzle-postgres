@@ -2,8 +2,9 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { LoginInput } from './user.schema';
 import { BadRequestError, ServerError, UnauthorizedError } from '@/helpers/ServerError';
 import Logger from '@/helpers/Logger';
-import db from '@/config/drizzle.config';
-import { users } from '@/db/schema/users';
+import { UserSchema } from '@/db/schema/User.schema';
+import { db } from '@/db';
+import ResponseData from '@/helpers/ResponseData';
 // import User from '@/models/User';
 
 export const login = async (request: FastifyRequest<{ Body: LoginInput }>, reply: FastifyReply) => {
@@ -17,14 +18,14 @@ export const login = async (request: FastifyRequest<{ Body: LoginInput }>, reply
 
     // throw new UnauthorizedError('User not found');
 
-    await db.insert(users).values({
+    await db.insert(UserSchema).values({
       fullName: 'jetz',
       phone: '1292',
     });
 
-    return reply.code(200).send({
+    return new ResponseData(reply, {
       ok: 'ok',
-    });
+    })
   } catch (err) {
     throw err;
   }

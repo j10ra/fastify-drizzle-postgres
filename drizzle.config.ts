@@ -7,8 +7,8 @@ const dbPassword = process.env.DB_PASSWORD || 'password';
 const dbHost = process.env.DB_HOST || 'localhost';
 
 export default {
-  schema: './src/schema.ts',
-  out: './drizzle/migrations',
+  schema: './src/db/schema',
+  out: './migrations',
   driver: 'pg',
   dbCredentials: {
     host: dbHost,

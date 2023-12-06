@@ -15,6 +15,6 @@
       "@/*": ["*"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "scripts/migrate.ts"],
   "exclude": ["node_modules"]
 }

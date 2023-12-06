@@ -23,7 +23,7 @@ export function registerServiceLogger(server: FastifyInstance<RawServerBase>) {
       payload: string,
       done: (err?: Error) => void
     ) => {
-      server.log.info({ response: JSON.parse(payload) }, 'Response details');
+      server.log.info({ response: payload }, 'Response details');
       done();
     }
   );
@@ -35,17 +35,17 @@ export function getLoggerOptions() {
 
   return isProduction
     ? {
-        level,
-        stream: LogStream.prefix('api'),
-        formatters: {
-          bindings: (bindings) => {
-            return { pid: bindings.pid, host: bindings.hostname };
-          },
-          level: (label) => {
-            return { level: label.toUpperCase() };
-          },
+      level,
+      stream: LogStream.prefix('api'),
+      formatters: {
+        bindings: (bindings) => {
+          return { pid: bindings.pid, host: bindings.hostname };
         },
-        timestamp: pino.stdTimeFunctions.isoTime,
-      }
+        level: (label) => {
+          return { level: label.toUpperCase() };
+        },
+      },
+      timestamp: pino.stdTimeFunctions.isoTime,
+    }
     : pino({ level });
 }

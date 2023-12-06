@@ -3,7 +3,7 @@ import registerSwagger from './config/swagger.config';
 import registerRoutes from './routes';
 import { errorHandler } from './middleware/errorHandler';
 import { getLoggerOptions, registerServiceLogger } from './config/logger.config';
-import sequelize from './config/sequelize.config';
+// import sequelize from './config/sequelize.config';
 
 const server = fastify({
   ajv: {
@@ -40,7 +40,5 @@ registerRoutes(server);
 registerServiceLogger(server);
 
 server.setErrorHandler(errorHandler);
-
-sequelize;
 
 export default server;

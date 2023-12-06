@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node build/index.js | pino-pretty --colorize",
-    "dev": "ts-node-dev -r tsconfig-paths/register ./src/index.ts | pino-pretty --colorize"
+    "dev": "ts-node-dev -r tsconfig-paths/register ./src/index.ts | pino-pretty --colorize",
+    "drizzle:generate": "npx drizzle-kit generate:pg",
+    "drizzle:migrate": "ts-node ./scripts/migrate.ts"
   },
   "author": "",
   "license": "ISC",
