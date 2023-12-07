@@ -18,10 +18,18 @@ export const login = async (request: FastifyRequest<{ Body: LoginInput }>, reply
 
     // throw new UnauthorizedError('User not found');
 
+    // await db.insert(UserSchema).values({
+    //   ''
+    // });
+
     await db.insert(UserSchema).values({
-      fullName: 'jetz',
-      phone: '1292',
-    });
+      username: 'exampleUsername',
+      firstname: 'exampleFirstname',
+      lastname: 'exampleLastname',
+      middlename: 'exampleMiddlename',
+      password: 'examplePassword',
+      salt: 'exampleSalt',
+    })
 
     return new ResponseData(reply, {
       ok: 'ok',

@@ -1,9 +1,17 @@
-import { pgTable, serial, text, varchar } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
+import { pgTable, serial, text, uuid, varchar, timestamp } from 'drizzle-orm/pg-core';
+
 
 export const UserSchema = pgTable('Users', {
-  id: serial('id').primaryKey(),
-  fullName: text('full_name'),
-  phone: varchar('phone', { length: 256 }),
+  id: uuid('id').primaryKey().defaultRandom(),
+  username: text('username').unique(),
+  firstname: text('firstname'),
+  lastname: text('lastname'),
+  middlename: text('middlename'),
+  password: text('password'),
+  salt: text('salt'),
+  createdAt: timestamp('created_at').default(sql`now()`),
+  updatedAt: timestamp('updated_at').default(sql`now()`)
 });
 
 export type User = typeof UserSchema.$inferSelect;
