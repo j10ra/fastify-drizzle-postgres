@@ -31,8 +31,9 @@ export async function errorHandler(
   }
 
   // Construct error response
-  const errorResponse: { code: number; message: string; stack?: string } = {
-    code: serverError.statusCode,
+  const errorResponse: { error: boolean, statusCode: number; message: string; stack?: string } = {
+    error: true,
+    statusCode: serverError.statusCode,
     message: serverError.message,
   };
 

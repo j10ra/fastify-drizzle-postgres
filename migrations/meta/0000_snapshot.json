@@ -1,5 +1,5 @@
 {
-  "id": "52240df4-3b0e-4b0c-b122-11a4f410cc12",
+  "id": "ef30bed4-c7f5-4391-8df6-006821d23433",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -15,8 +15,8 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "username": {
-          "name": "username",
+        "email": {
+          "name": "email",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -56,25 +56,25 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
-          "default": "now()"
+          "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
         },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
-          "default": "now()"
+          "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "Users_username_unique": {
-          "name": "Users_username_unique",
+        "Users_email_unique": {
+          "name": "Users_email_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "username"
+            "email"
           ]
         }
       }
@@ -107,14 +107,14 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
-          "default": "now()"
+          "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
         },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
-          "default": "now()"
+          "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
         },
         "last_used_at": {
           "name": "last_used_at",

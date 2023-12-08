@@ -6,8 +6,8 @@ export const UserXTokenSchema = pgTable('UserXToken', {
     id: uuid('id').primaryKey().defaultRandom(),
     refreshToken: text('refresh_token'),
     userProfileId: uuid('user_profile_id').notNull().references(() => UserSchema.id),
-    createdAt: timestamp('created_at').default(sql`now()`),
-    updatedAt: timestamp('updated_at').default(sql`now()`),
+    createdAt: timestamp('created_at').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`),
+    updatedAt: timestamp('updated_at').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`),
     lastUsedAt: timestamp('last_used_at')
 });
 

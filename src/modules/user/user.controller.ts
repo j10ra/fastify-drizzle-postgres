@@ -2,44 +2,78 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { CreateUserInput, LoginInput } from './user.schema';
 import { BadRequestError, ServerError, UnauthorizedError } from '@/helpers/ServerError';
 import Logger from '@/helpers/Logger';
-import { UserSchema } from '@/db/schema/User.schema';
+import { User, UserSchema } from '@/db/schema/User.schema';
 import { db } from '@/db';
 import ResponseData from '@/helpers/ResponseData';
-// import User from '@/models/User';
+import { HashPassword } from '@/helpers/HashPassword';
+import { sql } from 'drizzle-orm';
+import { insertUser, queryUserByEmail } from './user.service';
+import server from '@/server';
 
 export async function createUser(
-  request: FastifyRequest<{ Body: CreateUserInput }>,
+  request: FastifyRequest,
   reply: FastifyReply
-) {}
-
-export const login = async (request: FastifyRequest<{ Body: LoginInput }>, reply: FastifyReply) => {
+) {
   try {
-    const { email, password } = request.body;
-    // traceLog(request, { message: 'Check user email and password' });
+    const body: CreateUserInput = request.body;
+    const { hash: password, salt } = HashPassword.generate(body.password);
+    const newUser = {
+      ...body,
+      password,
+      salt,
+    }
 
-    // await User.create({
-    //   firstName: 'jets',
-    // });
+    Logger.log(request, { message: 'validate username' });
+    const users = await queryUserByEmail(body.email)
 
-    // throw new UnauthorizedError('User not found');
+    if (users.count >= 1) {
+      throw new BadRequestError('Username is already taken')
+    }
 
-    // await db.insert(UserSchema).values({
-    //   ''
-    // });
+    return new ResponseData(reply, await insertUser(newUser));
+  } catch (error) {
+    Logger.log(request, { error: error.message });
+    throw error
+  }
+}
 
-    await db.insert(UserSchema).values({
-      username: 'exampleUsername',
-      firstname: 'exampleFirstname',
-      lastname: 'exampleLastname',
-      middlename: 'exampleMiddlename',
-      password: 'examplePassword',
-      salt: 'exampleSalt',
-    });
+export async function loginLocal(request: FastifyRequest<{ Body: LoginInput }>, reply: FastifyReply) {
+  try {
+    const { email, password }: LoginInput = request.body;
+    const users = await queryUserByEmail(email);
 
-    return new ResponseData(reply, {
-      ok: 'ok',
-    });
+    if (users.count === 0 || !users.at(0).password && !users.at(0).salt) {
+      console.log('here >>')
+      throw new UnauthorizedError()
+    }
+
+    const user = users.at(0);
+
+    console.log('>>>', user)
+    const verified = HashPassword.verify(password, user.password, user.salt);
+
+    if (!verified) {
+
+      console.log('here >>>', verified)
+      throw new UnauthorizedError()
+
+    }
+
+    const test = {
+      accessToken: server.jwt.sign({ id: user.id })
+    }
+    return new ResponseData(reply, test);
   } catch (err) {
     throw err;
   }
-};
+}
+
+
+export async function getAllUsers(request: FastifyRequest<{ Body: LoginInput }>, reply: FastifyReply) {
+  try {
+
+    return new ResponseData(reply, 'test');
+  } catch (err) {
+    throw err;
+  }
+}

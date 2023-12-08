@@ -1,22 +1,22 @@
 CREATE TABLE IF NOT EXISTS "Users" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"username" text,
+	"email" text,
 	"firstname" text,
 	"lastname" text,
 	"middlename" text,
 	"password" text,
 	"salt" text,
-	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp DEFAULT now(),
-	CONSTRAINT "Users_username_unique" UNIQUE("username")
+	"created_at" timestamp DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+	"updated_at" timestamp DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+	CONSTRAINT "Users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "UserXToken" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"refresh_token" text,
 	"user_profile_id" uuid NOT NULL,
-	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp DEFAULT now(),
+	"created_at" timestamp DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+	"updated_at" timestamp DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
 	"last_used_at" timestamp
 );
 --> statement-breakpoint

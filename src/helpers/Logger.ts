@@ -6,13 +6,12 @@ const Logger = {
     const reqId = request.id;
 
     if (process.env.NODE_ENV === 'development') {
-      request.log.info({ reqId, ...message });
+      console.log(`\x1b[33m[DEBUG]:\x1b[0m ${reqId}`, { ...message })
     }
 
     const log = LogStream.prefix('service');
-    const logMessage = `[${new Date().toISOString()}] LOG: ${reqId}: ${
-      typeof message === 'object' ? JSON.stringify(message) : message
-    }\n`;
+    const logMessage = `[${new Date().toISOString()}] LOG: ${reqId}: ${typeof message === 'object' ? JSON.stringify(message) : message
+      }\n`;
 
     log.write(logMessage);
   },

@@ -13,7 +13,8 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./src/types/**/*"]
   },
   "include": ["src/**/*.ts", "scripts/migrate.ts"],
   "exclude": ["node_modules"]

@@ -1,9 +1,9 @@
-import fastify from 'fastify';
+import fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import registerSwagger from './config/swagger.config';
 import registerRoutes from './routes';
 import { errorHandler } from './middleware/errorHandler';
 import { getLoggerOptions, registerServiceLogger } from './config/logger.config';
-// import sequelize from './config/sequelize.config';
+import { UnauthorizedError } from './helpers/ServerError';
 
 const server = fastify({
   ajv: {
@@ -19,6 +19,20 @@ const server = fastify({
 server.register(require('@fastify/formbody'));
 server.register(require('@fastify/helmet'));
 server.register(require('@fastify/cors'));
+server.register(require('@fastify/jwt'), {
+  secret: 'supersecret'
+})
+
+server.decorate(
+  "authenticate",
+  async (request, reply: FastifyReply) => {
+    try {
+      await request.jwtVerify();
+    } catch (e) {
+      throw new UnauthorizedError();
+    }
+  }
+);
 
 server.get('/', (_request, reply) => {
   reply.send({ name: 'fastify-api' });
@@ -41,4 +55,4 @@ registerServiceLogger(server);
 
 server.setErrorHandler(errorHandler);
 
-export default server;
+export default server as any;
