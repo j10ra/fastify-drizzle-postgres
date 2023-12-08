@@ -3,8 +3,8 @@ import { FastifyInstance } from 'fastify';
 const swaggerOptions = {
   swagger: {
     info: {
-      title: 'My Title',
-      description: 'My Description.',
+      title: 'Fastify API',
+      description: 'Fastify Api swagger documentation',
       version: '1.0.0',
     },
     host: 'localhost:8000',

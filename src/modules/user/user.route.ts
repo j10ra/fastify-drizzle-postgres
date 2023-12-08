@@ -1,9 +1,14 @@
 import { FastifyInstance } from 'fastify';
-import { loginSchema } from './user.schema';
-import { login } from './user.controller';
+import { createUserSchema, loginSchema } from './user.schema';
+import { createUser, login } from './user.controller';
 
 async function userRouter(fastify: FastifyInstance) {
-  //   fastify.decorateRequest('authUser', '');
+  fastify.route({
+    method: 'POST',
+    url: '/create',
+    schema: createUserSchema,
+    handler: createUser,
+  });
 
   fastify.route({
     method: 'POST',

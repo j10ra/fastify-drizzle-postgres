@@ -1,11 +1,16 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { LoginInput } from './user.schema';
+import { CreateUserInput, LoginInput } from './user.schema';
 import { BadRequestError, ServerError, UnauthorizedError } from '@/helpers/ServerError';
 import Logger from '@/helpers/Logger';
 import { UserSchema } from '@/db/schema/User.schema';
 import { db } from '@/db';
 import ResponseData from '@/helpers/ResponseData';
 // import User from '@/models/User';
+
+export async function createUser(
+  request: FastifyRequest<{ Body: CreateUserInput }>,
+  reply: FastifyReply
+) {}
 
 export const login = async (request: FastifyRequest<{ Body: LoginInput }>, reply: FastifyReply) => {
   try {
@@ -29,11 +34,11 @@ export const login = async (request: FastifyRequest<{ Body: LoginInput }>, reply
       middlename: 'exampleMiddlename',
       password: 'examplePassword',
       salt: 'exampleSalt',
-    })
+    });
 
     return new ResponseData(reply, {
       ok: 'ok',
-    })
+    });
   } catch (err) {
     throw err;
   }
