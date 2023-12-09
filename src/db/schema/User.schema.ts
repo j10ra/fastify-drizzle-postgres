@@ -10,8 +10,8 @@ export const UserSchema = pgTable('Users', {
   middlename: text('middlename'),
   password: text('password'),
   salt: text('salt'),
-  createdAt: timestamp('created_at').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`),
-  updatedAt: timestamp('updated_at').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`)
+  createdAt: timestamp('createdAt').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`),
+  updatedAt: timestamp('updatedAat').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`)
 });
 
 export type User = typeof UserSchema.$inferSelect;

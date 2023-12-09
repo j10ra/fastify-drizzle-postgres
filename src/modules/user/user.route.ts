@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { createUserSchema, loginSchema } from './user.schema';
-import { createUser, getAllUsers, loginLocal } from './user.controller';
+import { createUserSchema, getallUserSchema } from './user.schema';
+import { createUser, getAllUsers, } from './user.controller';
 import server from '@/server';
 
 async function userRouter(fastify: FastifyInstance) {
@@ -12,15 +12,9 @@ async function userRouter(fastify: FastifyInstance) {
   });
 
   fastify.route({
-    method: 'POST',
-    url: '/login',
-    schema: loginSchema,
-    handler: loginLocal,
-  });
-
-  fastify.route({
     method: 'GET',
     url: '/all',
+    schema: getallUserSchema,
     preHandler: [server.authenticate],
     handler: getAllUsers,
   });

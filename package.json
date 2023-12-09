@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node build/index.js | pino-pretty --colorize",
-    "dev": "ts-node-dev -r tsconfig-paths/register ./src/index.ts | pino-pretty --colorize",
+    "dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/index.ts | pino-pretty --colorize",
     "drizzle:generate": "npx drizzle-kit generate:pg",
     "drizzle:migrate": "ts-node ./scripts/migrate.ts"
   },
@@ -35,7 +35,6 @@
     "pino-pretty": "^10.2.3",
     "postgres": "^3.4.3",
     "prettier": "^3.1.0",
-    "typescript": "^5.3.2",
     "zod": "^3.22.4",
     "zod-to-json-schema": "^3.22.1"
   },
@@ -45,6 +44,7 @@
     "sequelize-cli": "^6.6.2",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
-    "tsconfig-paths": "^4.2.0"
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.3.2"
   }
 }

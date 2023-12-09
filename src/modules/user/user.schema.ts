@@ -1,14 +1,5 @@
-import { Utils } from '@/helpers/Utils';
-import { ZodObject, ZodRawShape, z } from 'zod';
-import { zodToJsonSchema as s } from 'zod-to-json-schema';
-
-const login = z.object({
-  email: z.string().email(),
-  password: z.string({ required_error: 'Password is required' }).min(6),
-});
-
-export const loginSchema = Utils.schemaHelper({ body: login }, ['User']);
-export type LoginInput = z.infer<typeof login>;
+import { Utils } from '@/factory/Utils';
+import { z } from 'zod';
 
 const createUser = z.object({
   email: z.string({ required_error: 'Username is required' }).email(),
@@ -19,3 +10,5 @@ const createUser = z.object({
 });
 export const createUserSchema = Utils.schemaHelper({ body: createUser }, ['User']);
 export type CreateUserInput = z.infer<typeof createUser>;
+
+export const getallUserSchema = Utils.schemaHelper({}, ['User']);

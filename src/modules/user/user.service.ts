@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { NewUser, User, UserSchema } from "@/db/schema/User.schema";
 import { sql } from "drizzle-orm";
+import postgres from "postgres";
 
 export async function insertUser(newUser: NewUser) {
     const userData = await db.insert(UserSchema).values(newUser).returning({
@@ -10,7 +11,7 @@ export async function insertUser(newUser: NewUser) {
         lastname: UserSchema.lastname,
         middlename: UserSchema.middlename,
         createdAt: UserSchema.createdAt,
-        updatedAt: UserSchema.updatedAt
+        updatedAt: UserSchema.updatedAt,
     }).execute()
 
     return userData.pop();

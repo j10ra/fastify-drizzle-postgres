@@ -3,7 +3,9 @@ import registerSwagger from './config/swagger.config';
 import registerRoutes from './routes';
 import { errorHandler } from './middleware/errorHandler';
 import { getLoggerOptions, registerServiceLogger } from './config/logger.config';
-import { UnauthorizedError } from './helpers/ServerError';
+import { HttpBadRequestError, HttpUnauthorizedError } from './factory/ServerError';
+import { JWT } from '@fastify/jwt';
+import ResponseData from './factory/ResponseData';
 
 const server = fastify({
   ajv: {
@@ -20,22 +22,22 @@ server.register(require('@fastify/formbody'));
 server.register(require('@fastify/helmet'));
 server.register(require('@fastify/cors'));
 server.register(require('@fastify/jwt'), {
-  secret: 'supersecret'
+  secret: process.env.ACCESS_TOKEN_SECRET
 })
 
 server.decorate(
   "authenticate",
-  async (request, reply: FastifyReply) => {
+  async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       await request.jwtVerify();
     } catch (e) {
-      throw new UnauthorizedError();
+      throw new HttpUnauthorizedError();
     }
   }
 );
 
 server.get('/', (_request, reply) => {
-  reply.send({ name: 'fastify-api' });
+  return new ResponseData(reply, { name: 'fastify-api' })
 });
 
 server.get('/health-check', async (_request, reply) => {
@@ -43,9 +45,9 @@ server.get('/health-check', async (_request, reply) => {
     // TODO: add db health check
     // await utils.healthCheck();
 
-    reply.status(200).send();
+    return new ResponseData(reply, 'ok')
   } catch (e) {
-    reply.status(500).send();
+    throw new HttpBadRequestError(e)
   }
 });
 
@@ -55,4 +57,4 @@ registerServiceLogger(server);
 
 server.setErrorHandler(errorHandler);
 
-export default server as any;
+export default server;

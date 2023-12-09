@@ -1,5 +1,5 @@
 import './config/env.config';
-import LogStream from './helpers/LogStream';
+import LogStream from './factory/LogStream';
 import server from './server';
 
 const port = (process.env.API_PORT as unknown as number) || 8000;

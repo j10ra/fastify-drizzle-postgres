@@ -4,11 +4,11 @@ import { UserSchema } from './User.schema';
 
 export const UserXTokenSchema = pgTable('UserXToken', {
     id: uuid('id').primaryKey().defaultRandom(),
-    refreshToken: text('refresh_token'),
-    userProfileId: uuid('user_profile_id').notNull().references(() => UserSchema.id),
-    createdAt: timestamp('created_at').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`),
-    updatedAt: timestamp('updated_at').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`),
-    lastUsedAt: timestamp('last_used_at')
+    refreshToken: text('refreshToken'),
+    userProfileId: uuid('userProfileId').notNull().references(() => UserSchema.id),
+    createdAt: timestamp('createdAt').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`),
+    updatedAt: timestamp('updatedAt').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`),
+    lastUsedAt: timestamp('lastUsedAt')
 });
 
 export type UserXToken = typeof UserXTokenSchema.$inferSelect;

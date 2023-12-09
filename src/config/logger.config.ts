@@ -1,5 +1,5 @@
 import pino from 'pino';
-import LogStream from '@/helpers/LogStream';
+import LogStream from '@/factory/LogStream';
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { RawServerBase } from 'fastify/types/utils';
 

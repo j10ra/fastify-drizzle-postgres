@@ -14,8 +14,8 @@
     "paths": {
       "@/*": ["*"]
     },
-    "typeRoots": ["./node_modules/@types", "./src/types/**/*"]
+    "skipLibCheck": true,
   },
-  "include": ["src/**/*.ts", "scripts/migrate.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
