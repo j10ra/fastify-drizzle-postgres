@@ -1,5 +1,5 @@
-import { Utils } from '@/factory/Utils';
 import { z } from 'zod';
+import { Utils } from '@/factory/Utils';
 
 const createUser = z.object({
   email: z.string({ required_error: 'Username is required' }).email(),

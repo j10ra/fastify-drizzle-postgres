@@ -1,7 +1,10 @@
+/* eslint-disable max-classes-per-file */
+
 import httpStatus from 'http-status';
 
 export class ServerError extends Error {
   statusCode: number;
+
   isOperational: boolean;
 
   /**
@@ -12,6 +15,7 @@ export class ServerError extends Error {
    * @param {string} [stack=''] - Stack trace of the error.
    */
   constructor(
+    // eslint-disable-next-line default-param-last
     statusCode: number = 500,
     message: string,
     isOperational: boolean = true,
@@ -31,7 +35,6 @@ export class ServerError extends Error {
     }
   }
 }
-
 export class HttpBadRequestError extends ServerError {
   constructor(message = httpStatus[400], stack = '') {
     super(httpStatus.BAD_REQUEST, message, true, stack);

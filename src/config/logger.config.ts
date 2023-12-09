@@ -1,7 +1,7 @@
-import pino from 'pino';
-import LogStream from '@/factory/LogStream';
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { RawServerBase } from 'fastify/types/utils';
+import pino from 'pino';
+import LogStream from '@/factory/LogStream';
 
 // this hook work only on development
 export function registerServiceLogger(server: FastifyInstance<RawServerBase>) {
@@ -35,17 +35,17 @@ export function getLoggerOptions() {
 
   return isProduction
     ? {
-      level,
-      stream: LogStream.prefix('api'),
-      formatters: {
-        bindings: (bindings) => {
-          return { pid: bindings.pid, host: bindings.hostname };
+        level,
+        stream: LogStream.prefix('api'),
+        formatters: {
+          bindings: (bindings) => {
+            return { pid: bindings.pid, host: bindings.hostname };
+          },
+          level: (label) => {
+            return { level: label.toUpperCase() };
+          },
         },
-        level: (label) => {
-          return { level: label.toUpperCase() };
-        },
-      },
-      timestamp: pino.stdTimeFunctions.isoTime,
-    }
+        timestamp: pino.stdTimeFunctions.isoTime,
+      }
     : pino({ level });
 }

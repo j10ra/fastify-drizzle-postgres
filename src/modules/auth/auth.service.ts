@@ -1,31 +1,34 @@
-import crypto from 'crypto';
-import { db } from "@/db";
-import { UserXToken, UserXTokenSchema } from "@/db/schema/UserXToken.schema";
-import { HttpInternalServerError, HttpUnauthorizedError } from "@/factory/ServerError";
-import server from "@/server";
-import { eq, sql } from "drizzle-orm";
+import { eq, sql } from 'drizzle-orm';
+import { db } from '@/db';
+import { UserXToken, UserXTokenSchema } from '@/db/schema/UserXToken.schema';
+import { HttpInternalServerError } from '@/factory/ServerError';
 import { TokenManager } from '@/factory/TokenManager';
 
 export async function insertRefreshToken(userId: string) {
   try {
     const refreshToken = TokenManager.generateRefreshToken(userId);
 
-    await db.insert(UserXTokenSchema).values({
-      userProfileId: userId,
-      refreshToken,
-    }).execute();
+    await db
+      .insert(UserXTokenSchema)
+      .values({
+        userProfileId: userId,
+        refreshToken,
+      })
+      .execute();
 
     return refreshToken;
   } catch (err) {
-    throw new HttpInternalServerError()
+    throw new HttpInternalServerError();
   }
 }
 
 export async function findRefreshToken(refreshToken: string) {
-  const xToken = await db.execute<UserXToken>(sql`SELECT * FROM "UserXToken" WHERE "refreshToken" = ${refreshToken}`);
+  const xToken = await db.execute<UserXToken>(
+    sql`SELECT * FROM "UserXToken" WHERE "refreshToken" = ${refreshToken}`
+  );
 
   if (xToken.count === 0) {
-    throw new HttpInternalServerError('Invalid refresh token')
+    throw new HttpInternalServerError('Invalid refresh token');
   }
 
   return xToken.shift();
@@ -33,14 +36,15 @@ export async function findRefreshToken(refreshToken: string) {
 
 export async function updateRefreshToken(id: string) {
   return await db
-    .update(UserXTokenSchema).set({
-      lastUsedAt: sql`CURRENT_TIMESTAMP AT TIME ZONE 'UTC'`
+    .update(UserXTokenSchema)
+    .set({
+      lastUsedAt: sql`CURRENT_TIMESTAMP AT TIME ZONE 'UTC'`,
     })
     .where(eq(UserXTokenSchema.id, id))
     .returning({
       id: UserXTokenSchema.id,
-      lastUsedAt: UserXTokenSchema.lastUsedAt
-    })
+      lastUsedAt: UserXTokenSchema.lastUsedAt,
+    });
 }
 
 export async function deleteXTokenByUserProfileId(userProfile: string) {

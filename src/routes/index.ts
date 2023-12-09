@@ -1,5 +1,5 @@
-import version1Routes from './v1.routes';
 import { RouteConfig } from 'types/RouteConfig';
+import version1Routes from './v1.routes';
 
 export default function registerRoutes(server) {
   function loadVersionedRoutes(routes: RouteConfig[], version: string) {

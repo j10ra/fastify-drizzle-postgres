@@ -4,20 +4,11 @@ import envSchema from 'env-schema';
 import { z } from 'zod';
 import { zodToJsonSchema as s } from 'zod-to-json-schema';
 
-const locations = [
-  'config',
-  'db',
-  'factory',
-  'middleware',
-  'modules',
-  'routes',
-  'server',
-  'types'
-]
-const aliasReducer = (acc: { [x: string]: string; }, alias: any) => {
+const locations = ['config', 'db', 'factory', 'middleware', 'modules', 'routes', 'server', 'types'];
+const aliasReducer = (acc: { [x: string]: string }, alias: string) => {
   acc[`@/${alias}`] = `${__dirname}/../${alias}`;
   return acc;
-}
+};
 const aliases = locations.reduce(aliasReducer, {});
 
 moduleAlias.addAliases(aliases);

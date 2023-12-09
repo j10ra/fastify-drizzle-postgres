@@ -1,5 +1,4 @@
 import { FastifyReply } from 'fastify';
-import Logger from './Logger';
 
 class ResponseData {
   constructor(reply: FastifyReply, payload: any = {}, statusCode: number = 200) {

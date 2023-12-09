@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { SchemaHelper } from '@/types/SchemaHelper';
 import { zodToJsonSchema as s } from 'zod-to-json-schema';
 import { FastifySchema } from 'fastify';
+import { SchemaHelper } from '@/types/SchemaHelper';
 
 export const Utils = {
   /**

@@ -1,7 +1,7 @@
 // errorHandler.ts
 import { FastifyError, FastifyRequest, FastifyReply } from 'fastify';
-import errorAdapter from './errorAdapter';
 import httpStatus from 'http-status';
+import errorAdapter from './errorAdapter';
 
 function logError(error: FastifyError, request: FastifyRequest) {
   request.log.error(error);
@@ -31,7 +31,7 @@ export async function errorHandler(
   }
 
   // Construct error response
-  const errorResponse: { error: boolean, statusCode: number; message: string; stack?: string } = {
+  const errorResponse: { error: boolean; statusCode: number; message: string; stack?: string } = {
     error: true,
     statusCode: serverError.statusCode,
     message: serverError.message,

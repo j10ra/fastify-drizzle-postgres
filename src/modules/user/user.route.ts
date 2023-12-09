@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { createUserSchema, getallUserSchema } from './user.schema';
-import { createUser, getAllUsers, } from './user.controller';
+import { createUser, getAllUsers } from './user.controller';
 import server from '@/server';
 
 async function userRouter(fastify: FastifyInstance) {

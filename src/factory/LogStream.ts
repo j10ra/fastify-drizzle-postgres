@@ -3,6 +3,7 @@ import path from 'path';
 
 class LogStream {
   logBaseDir: string;
+
   streams: { [key: string]: fs.WriteStream };
 
   constructor(logBaseDir: string = 'logs') {
@@ -43,7 +44,7 @@ class LogStream {
 
   closeAll() {
     for (const type in this.streams) {
-      if (this.streams.hasOwnProperty(type)) {
+      if (type in this.streams) {
         this.streams[type].end();
         delete this.streams[type];
       }

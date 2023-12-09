@@ -8,29 +8,24 @@ import Logger from '@/factory/Logger';
 import ResponseData from '@/factory/ResponseData';
 
 export const createUser = Controller<{ Body: CreateUserInput }>(async (req, reply) => {
-  const body: CreateUserInput = req.body;
+  const { body } = req;
   const { hash: password, salt } = TokenManager.generatePasswordToken(body.password);
   const newUser = {
     ...body,
     password,
     salt,
-  }
+  };
 
   Logger.log(req, { message: 'validate username' });
-  const users = await queryUserByEmail(body.email)
+  const users = await queryUserByEmail(body.email);
 
   if (users.count >= 1) {
-    throw new HttpBadRequestError('Username is already taken')
+    throw new HttpBadRequestError('Username is already taken');
   }
 
   return new ResponseData(reply, await insertUser(newUser));
-})
-
+});
 
 export async function getAllUsers(request: FastifyRequest, reply: FastifyReply) {
-  try {
-    return new ResponseData(reply, 'test');
-  } catch (err) {
-    throw err;
-  }
+  return new ResponseData(reply, 'test');
 }
