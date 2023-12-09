@@ -1,24 +1,51 @@
-# Getting Started with [Fastify-CLI](https://www.npmjs.com/package/fastify-cli)
+# Build a Rest API with Fastify and Drizzle
 
-This project was bootstrapped with Fastify-CLI.
+This is a Fastify API project with automatic Swagger documentation and request schema validation. It uses Drizzle ORM for database operations and PostgreSQL as the database.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Basic Authentication
+- Automatic Swagger Documentation
+- Request Schema Validation
 
-### `npm run dev`
+## Built with
 
-To start the app in dev mode.\
-Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
+- Fastify
+- Drizzle ORM
+- PostgreSQL
 
-### `npm start`
+### Getting Started
 
-For production mode
+1. Clone the repository
 
-### `npm run test`
+```
+git clone <repository-url>
+```
 
-Run the test cases.
+2. Install the dependencies:
 
-## Learn More
+```
+npm install
+```
 
-To learn Fastify, check out the [Fastify documentation](https://www.fastify.io/docs/latest/).
+3. Build the project:
+
+```
+npm run build
+```
+
+4. Start the server
+
+```
+npm run start
+```
+
+#### Start development mode
+
+```
+npm run dev
+```
+
+## License
+
+this project is license under the MIT License
