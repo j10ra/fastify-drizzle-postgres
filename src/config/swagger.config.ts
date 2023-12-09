@@ -1,4 +1,6 @@
 import { FastifyInstance } from 'fastify';
+import { HttpBadRequestError } from '@/factory/ServerError';
+import ResponseData from '@/factory/ResponseData';
 
 const swaggerOptions = {
   swagger: {
@@ -36,4 +38,19 @@ const swaggerUiOptions = {
 export default function registerSwagger(server: FastifyInstance) {
   server.register(require('@fastify/swagger'), swaggerOptions);
   server.register(require('@fastify/swagger-ui'), swaggerUiOptions);
+
+  server.get('/', (_request, reply) => {
+    return new ResponseData(reply, { name: 'fastify-api' });
+  });
+
+  server.get('/health-check', async (_request, reply) => {
+    try {
+      // TODO: add db health check
+      // await utils.healthCheck();
+
+      return new ResponseData(reply, 'ok');
+    } catch (e) {
+      throw new HttpBadRequestError(e);
+    }
+  });
 }

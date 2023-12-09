@@ -27,5 +27,6 @@ export const createUser = Controller<{ Body: CreateUserInput }>(async (req, repl
 });
 
 export async function getAllUsers(request: FastifyRequest, reply: FastifyReply) {
+  Logger.log(request, { message: 'testing...' });
   return new ResponseData(reply, 'test');
 }
