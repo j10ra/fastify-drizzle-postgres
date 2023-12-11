@@ -1,21 +1,21 @@
-import { FastifyRequest } from 'fastify';
-import LogStream from './LogStream';
+/* eslint-disable no-console */
 
-const Logger = {
-  log: (request: FastifyRequest, message: Record<string, unknown>) => {
-    const reqId = request.id;
+class Logger {
+  static log(...args) {
+    console.log(...args);
+  }
 
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`\x1b[33m[DEBUG]:\x1b[0m ${reqId}`, { ...message });
-    }
+  static info(...args) {
+    console.info(...args);
+  }
 
-    const log = LogStream.prefix('service');
-    const logMessage = `[${new Date().toISOString()}] LOG: ${reqId}: ${
-      typeof message === 'object' ? JSON.stringify(message) : message
-    }\n`;
+  static warn(...args) {
+    console.warn(...args);
+  }
 
-    log.write(logMessage);
-  },
-};
+  static error(...args) {
+    console.error(...args);
+  }
+}
 
 export default Logger;

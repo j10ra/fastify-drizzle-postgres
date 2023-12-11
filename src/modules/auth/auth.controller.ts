@@ -1,3 +1,4 @@
+import type { FastifyReply, FastifyRequest } from 'fastify';
 import { LoginInput, LogoutInput, RefreshTokenInput } from './auth.schema';
 import { queryUserByEmail } from '../user/user.service';
 import { HttpInternalServerError, HttpUnauthorizedError } from '@/factory/ServerError';
@@ -12,7 +13,7 @@ import { Controller } from '@/factory/Controller';
 import { TokenManager } from '@/factory/TokenManager';
 import ResponseData from '@/factory/ResponseData';
 
-export const loginHandler = Controller<{ Body: LoginInput }>(async (req, reply) => {
+export async function loginHandler(req: FastifyRequest<{ Body: LoginInput }>, reply: FastifyReply) {
   const { email, password }: LoginInput = req.body;
   const users = await queryUserByEmail(email);
 
@@ -35,7 +36,7 @@ export const loginHandler = Controller<{ Body: LoginInput }>(async (req, reply) 
   };
 
   return new ResponseData(reply, payload);
-});
+}
 
 export const refreshTokenHandler = Controller<{ Body: RefreshTokenInput }>(async (req, reply) => {
   const { refreshToken } = req.body;

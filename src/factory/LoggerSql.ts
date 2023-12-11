@@ -1,9 +1,10 @@
-import { Logger } from 'drizzle-orm';
+import { Logger as PgLogger } from 'drizzle-orm';
+import Logger from './Logger';
 
-export default class LoggerSql implements Logger {
+export default class LogSql implements PgLogger {
   logQuery(query: string, params: unknown[]): void {
     if (process.env.NODE_ENV !== 'production') {
-      console.log(`\x1b[33m[POSTGRESQL]:\x1b[0m ${this.format(query, params)}`);
+      Logger.log(`\x1b[33m[POSTGRESQL]:\x1b[0m ${this.format(query, params)}`);
     }
   }
 
@@ -13,12 +14,13 @@ export default class LoggerSql implements Logger {
 
       params.forEach((param, index) => {
         const value = typeof param === 'string' ? `'${param}'` : param;
+
         formattedQuery = formattedQuery.replace(`$${index + 1}`, value as any);
       });
 
       return formattedQuery;
     } catch (err) {
-      console.error('Error formatting query for postgres:', err);
+      Logger.error('Error formatting query for postgres:', err);
 
       return null;
     }

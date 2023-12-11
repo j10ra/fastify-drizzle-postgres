@@ -4,7 +4,7 @@ import { HttpBadRequestError } from '@/factory/ServerError';
 import { insertUser, queryUserByEmail } from './user.service';
 import { Controller } from '@/factory/Controller';
 import { TokenManager } from '@/factory/TokenManager';
-import Logger from '@/factory/Logger';
+import Debug from '@/factory/LoggerDebug';
 import ResponseData from '@/factory/ResponseData';
 
 export const createUser = Controller<{ Body: CreateUserInput }>(async (req, reply) => {
@@ -16,7 +16,7 @@ export const createUser = Controller<{ Body: CreateUserInput }>(async (req, repl
     salt,
   };
 
-  Logger.log(req, { message: 'validate username' });
+  Debug.log(req, { message: 'validate username' });
   const users = await queryUserByEmail(body.email);
 
   if (users.count >= 1) {
@@ -27,6 +27,6 @@ export const createUser = Controller<{ Body: CreateUserInput }>(async (req, repl
 });
 
 export async function getAllUsers(request: FastifyRequest, reply: FastifyReply) {
-  Logger.log(request, { message: 'testing...' });
+  Debug.log(request, { message: 'testing...' });
   return new ResponseData(reply, 'test');
 }

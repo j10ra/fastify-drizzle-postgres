@@ -6,9 +6,9 @@ module.exports = {
   },
   extends: [
     'airbnb',
+    'prettier',
     'airbnb/hooks',
     'plugin:@typescript-eslint/recommended',
-    'prettier',
     'plugin:prettier/recommended',
   ],
   rules: {
@@ -25,5 +25,12 @@ module.exports = {
     'no-return-await': 0,
     'no-constructor-return': 0,
     'class-methods-use-this': 0,
+    'lines-between-class-members': 0,
+    'import/no-extraneous-dependencies': 0,
+    'padding-line-between-statements': [
+      'warn',
+      { blankLine: 'always', prev: 'const', next: '*' },
+      { blankLine: 'any', prev: 'const', next: 'const' },
+    ],
   },
 };

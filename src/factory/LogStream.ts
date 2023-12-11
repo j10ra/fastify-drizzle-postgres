@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import Logger from './Logger';
 
 class LogStream {
   logBaseDir: string;
-
   streams: { [key: string]: fs.WriteStream };
 
   constructor(logBaseDir: string = 'logs') {
@@ -28,15 +28,15 @@ class LogStream {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = date.toISOString().split('T')[0];
-
     const logDirectory = path.join(__dirname, `../../${this.logBaseDir}`, String(year), month);
+
     fs.mkdirSync(logDirectory, { recursive: true });
 
     const logFilePath = path.join(logDirectory, `${type}-${day}.txt`);
-    this.streams[type] = fs.createWriteStream(logFilePath, { flags: 'a' });
 
+    this.streams[type] = fs.createWriteStream(logFilePath, { flags: 'a' });
     this.streams[type].on('error', (err) => {
-      console.error(`Error in LogStream for type ${type}:`, err);
+      Logger.error(`Error in LogStream for type ${type}:`, err);
     });
 
     return this.streams[type];
