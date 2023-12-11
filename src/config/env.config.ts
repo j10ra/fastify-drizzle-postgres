@@ -29,6 +29,16 @@ export default function loadConfig(): void {
         NODE_ENV: z.enum(['production', 'development']),
         LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']),
         API_PORT: z.string().regex(/^\d+$/, 'API_PORT must be a number').transform(Number),
+
+        // database
+        DB_HOST: z.string(),
+        DB_NAME: z.string(),
+        DB_USER: z.string(),
+        DB_PASSWORD: z.string(),
+
+        // secrets
+        ACCESS_TOKEN_SECRET: z.string(),
+        X_TOKEN_SECRET: z.string(),
       })
     ),
     dotenv: true,

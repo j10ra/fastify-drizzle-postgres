@@ -18,9 +18,9 @@ export const TokenManager = {
    */
   generateRefreshToken: (userId: string) => {
     const hash = crypto.createHash('sha256');
-    const salt = new Date().toISOString() + crypto.randomBytes(16).toString('hex');
+    const unique = new Date().toISOString() + crypto.randomBytes(16).toString('hex');
 
-    hash.update(userId + process.env.X_TOKEN_SECRET + salt);
+    hash.update(userId + process.env.X_TOKEN_SECRET + unique);
     return hash.digest('hex').substring(0, 64);
   },
 
@@ -67,20 +67,5 @@ export const TokenManager = {
      */
 
     return candidateHash === hash;
-  },
-
-  /**
-   * Verifies a refresh token for a user.
-   *
-   * @param {string} tokenToVerify - The token to verify.
-   * @param {string} userId - The user's unique identifier.
-   */
-  verifyRefreshToken: (tokenToVerify: string, userId: string) => {
-    const hash = crypto.createHash('sha256');
-
-    hash.update(userId + process.env.X_TOKEN_SECRET);
-    const expectedToken = hash.digest('hex').substring(0, 64);
-
-    return expectedToken === tokenToVerify;
   },
 };

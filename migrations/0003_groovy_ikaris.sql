@@ -1,0 +1,1 @@
+ALTER TABLE "UserXToken" DROP COLUMN IF EXISTS "helloworld";

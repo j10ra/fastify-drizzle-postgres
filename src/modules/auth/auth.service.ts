@@ -24,14 +24,14 @@ export async function insertRefreshToken(userId: string) {
 
 export async function findRefreshToken(refreshToken: string) {
   const xToken = await db.execute<UserXToken>(
-    sql`SELECT * FROM "UserXToken" WHERE "refreshToken" = ${refreshToken}`
+    sql`SELECT * FROM ${UserXTokenSchema} WHERE ${UserXTokenSchema.refreshToken} = ${refreshToken}`
   );
 
   if (xToken.count === 0) {
     throw new HttpInternalServerError('Invalid refresh token');
   }
 
-  return xToken.shift();
+  return xToken;
 }
 
 export async function updateRefreshToken(id: string) {

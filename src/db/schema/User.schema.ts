@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm';
 import { pgTable, text, uuid, timestamp } from 'drizzle-orm/pg-core';
 
-export const UserSchema = pgTable('Users', {
+export const AuthSchema = pgTable('Authentication', {
   id: uuid('id').primaryKey().defaultRandom(),
   email: text('email').unique(),
   firstname: text('firstname'),
@@ -13,5 +13,6 @@ export const UserSchema = pgTable('Users', {
   updatedAt: timestamp('updatedAat').default(sql`(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')`),
 });
 
-export type User = typeof UserSchema.$inferSelect;
-export type NewUser = typeof UserSchema.$inferInsert;
+export type User = typeof AuthSchema.$inferSelect;
+export type NewUser = typeof AuthSchema.$inferInsert;
+export default AuthSchema;

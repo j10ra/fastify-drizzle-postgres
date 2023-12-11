@@ -1,0 +1,160 @@
+{
+  "id": "1e1bb200-7ab8-4279-a1ec-b3b0cdd46790",
+  "prevId": "7e85aeb8-bac5-47bb-bfec-ef210d57fea5",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "Users": {
+      "name": "Users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "firstname": {
+          "name": "firstname",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastname": {
+          "name": "lastname",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "middlename": {
+          "name": "middlename",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "salt": {
+          "name": "salt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
+        },
+        "updatedAat": {
+          "name": "updatedAat",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "Users_email_unique": {
+          "name": "Users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      }
+    },
+    "UserXToken": {
+      "name": "UserXToken",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "refreshToken": {
+          "name": "refreshToken",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "userProfileId": {
+          "name": "userProfileId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
+        },
+        "lastUsedAt": {
+          "name": "lastUsedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "helloworld": {
+          "name": "helloworld",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'helloworld'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "UserXToken_userProfileId_Users_id_fk": {
+          "name": "UserXToken_userProfileId_Users_id_fk",
+          "tableFrom": "UserXToken",
+          "tableTo": "Users",
+          "columnsFrom": [
+            "userProfileId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}

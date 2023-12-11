@@ -15,6 +15,27 @@
       "when": 1702119250594,
       "tag": "0001_sudden_vanisher",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1702190711297,
+      "tag": "0002_futuristic_cobalt_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1702190799320,
+      "tag": "0003_groovy_ikaris",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1702252268369,
+      "tag": "0004_ancient_nightshade",
+      "breakpoints": true
     }
   ]
 }

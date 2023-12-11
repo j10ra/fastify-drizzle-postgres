@@ -38,18 +38,19 @@ export const loginHandler = Controller<{ Body: LoginInput }>(async (req, reply) 
 });
 
 export const refreshTokenHandler = Controller<{ Body: RefreshTokenInput }>(async (req, reply) => {
-  const { refreshToken, userId } = req.body;
-  const xToken = await findRefreshToken(refreshToken);
-  const verifyXToken = TokenManager.verifyRefreshToken(xToken.refreshToken, userId);
+  const { refreshToken } = req.body;
+  const users = await findRefreshToken(refreshToken);
 
-  if (!verifyXToken) {
+  if (users.count === 0) {
     throw new HttpInternalServerError('Cannot verify refresh token');
   }
 
+  const verifiedUser = users.shift();
+
   // update refresh token
-  await updateRefreshToken(xToken.id);
+  await updateRefreshToken(verifiedUser.id);
   return new ResponseData(reply, {
-    accessToken: TokenManager.generateAccessToken(xToken.userProfileId),
+    accessToken: TokenManager.generateAccessToken(verifiedUser.userProfileId),
   });
 });
 
