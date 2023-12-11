@@ -59,4 +59,6 @@ profile*
 
 build/
 
+# env
+*.env
 .env
