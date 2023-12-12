@@ -5,4 +5,8 @@ declare module 'fastify' {
     authenticate: any;
     jwt: JWT;
   }
+
+  interface FastifyRequest {
+    jwtVerify: any;
+  }
 }

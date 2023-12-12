@@ -16,10 +16,10 @@
  * use `npm run schema:generate` to regenerate this file
  */
 
-import UserSchema from './User.schema';
-import UserXTokenSchema from './UserXToken.schema';
+import AuthenticationSchema from './Authentication.schema';
+import AuthXTokenSchema from './AuthXToken.schema';
 
-const schemas = [UserSchema, UserXTokenSchema];
+const schemas = [AuthenticationSchema, AuthXTokenSchema];
 const combinedSchema = schemas.reduce((acc, schema) => {
   const sym = Symbol.for('drizzle:BaseName');
   const name = schema[sym];

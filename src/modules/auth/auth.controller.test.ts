@@ -1,7 +1,5 @@
-// refreshTokenHandler.test.ts
 import { mockDeep, mockReset } from 'jest-mock-extended';
 import { FastifyReply, FastifyRequest } from 'fastify';
-
 import { loginHandler } from './auth.controller';
 import ResponseData from '@/factory/ResponseData';
 import { queryUserByEmail } from '../user/user.service';

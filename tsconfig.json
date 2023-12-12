@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": [
-      "es2020"
+      "es2020",
     ],
     "module": "commonjs",
     "target": "es2020",
@@ -14,7 +14,9 @@
     "outDir": "build",
     "baseUrl": "src",
     "types": [
-      "jest"
+      "jest",
+      "node",
+      "@types/jest"
     ],
     "paths": {
       "@/*": [
@@ -27,6 +29,7 @@
     "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "build"
   ]
 }

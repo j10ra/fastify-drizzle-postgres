@@ -1,8 +1,8 @@
 import { pgTable, uuid, text, timestamp } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
-import { AuthSchema } from './User.schema';
+import { AuthSchema } from './Authentication.schema';
 
-export const UserXTokenSchema = pgTable('UserXToken', {
+export const AuthXTokenSchema = pgTable('AuthXToken', {
   id: uuid('id').primaryKey().defaultRandom(),
   refreshToken: text('refreshToken'),
   userProfileId: uuid('userProfileId')
@@ -13,6 +13,6 @@ export const UserXTokenSchema = pgTable('UserXToken', {
   lastUsedAt: timestamp('lastUsedAt'),
 });
 
-export type UserXToken = typeof UserXTokenSchema.$inferSelect;
-export type NewUserXToken = typeof UserXTokenSchema.$inferInsert;
-export default UserXTokenSchema;
+export type UserXToken = typeof AuthXTokenSchema.$inferSelect;
+export type NewUserXToken = typeof AuthXTokenSchema.$inferInsert;
+export default AuthXTokenSchema;

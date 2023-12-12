@@ -1,5 +1,3 @@
-// File: scripts/schemaGenerate.ts
-
 import fs from 'fs';
 import path from 'path';
 
@@ -15,6 +13,7 @@ const schemaNames: string[] = [];
 files.forEach((file) => {
   if (file.endsWith('.schema.ts') && file !== 'index.ts') {
     const schemaName = file.replace('.schema.ts', 'Schema');
+
     imports.push(`import ${schemaName} from './${file.replace('.ts', '')}';`);
     schemaNames.push(schemaName);
   }

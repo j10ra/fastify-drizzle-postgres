@@ -11,6 +11,10 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
+  env: {
+    node: true,
+    jest: true,
+  },
   rules: {
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/camelcase': 0,
@@ -31,6 +35,12 @@ module.exports = {
       'warn',
       { blankLine: 'always', prev: 'const', next: '*' },
       { blankLine: 'any', prev: 'const', next: 'const' },
+    ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
     ],
   },
 };

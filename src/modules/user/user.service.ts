@@ -1,6 +1,6 @@
 import { sql } from 'drizzle-orm';
 import { db } from '@/db';
-import { NewUser, User, AuthSchema } from '@/db/schema/User.schema';
+import { NewUser, User, AuthSchema } from '@/db/schema/Authentication.schema';
 
 export async function insertUser(newUser: NewUser) {
   const userData = await db

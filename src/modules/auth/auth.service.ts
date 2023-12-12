@@ -1,6 +1,6 @@
 import { eq, sql } from 'drizzle-orm';
 import { db } from '@/db';
-import { UserXToken, UserXTokenSchema } from '@/db/schema/UserXToken.schema';
+import { UserXToken, AuthXTokenSchema } from '@/db/schema/AuthXToken.schema';
 import { HttpInternalServerError } from '@/factory/ServerError';
 import { TokenManager } from '@/factory/TokenManager';
 
@@ -9,7 +9,7 @@ export async function insertRefreshToken(userId: string) {
     const refreshToken = TokenManager.generateRefreshToken(userId);
 
     await db
-      .insert(UserXTokenSchema)
+      .insert(AuthXTokenSchema)
       .values({
         userProfileId: userId,
         refreshToken,
@@ -24,7 +24,7 @@ export async function insertRefreshToken(userId: string) {
 
 export async function findRefreshToken(refreshToken: string) {
   const xToken = await db.execute<UserXToken>(
-    sql`SELECT * FROM ${UserXTokenSchema} WHERE ${UserXTokenSchema.refreshToken} = ${refreshToken}`
+    sql`SELECT * FROM ${AuthXTokenSchema} WHERE ${AuthXTokenSchema.refreshToken} = ${refreshToken}`
   );
 
   if (xToken.count === 0) {
@@ -36,21 +36,21 @@ export async function findRefreshToken(refreshToken: string) {
 
 export async function updateRefreshToken(id: string) {
   return await db
-    .update(UserXTokenSchema)
+    .update(AuthXTokenSchema)
     .set({
       lastUsedAt: sql`CURRENT_TIMESTAMP AT TIME ZONE 'UTC'`,
     })
-    .where(eq(UserXTokenSchema.id, id))
+    .where(eq(AuthXTokenSchema.id, id))
     .returning({
-      id: UserXTokenSchema.id,
-      lastUsedAt: UserXTokenSchema.lastUsedAt,
+      id: AuthXTokenSchema.id,
+      lastUsedAt: AuthXTokenSchema.lastUsedAt,
     });
 }
 
 export async function deleteXTokenByUserProfileId(userProfile: string) {
-  await db.delete(UserXTokenSchema).where(eq(UserXTokenSchema.userProfileId, userProfile));
+  await db.delete(AuthXTokenSchema).where(eq(AuthXTokenSchema.userProfileId, userProfile));
 }
 
 export async function deleteXTokenByXToken(token: string) {
-  await db.delete(UserXTokenSchema).where(eq(UserXTokenSchema.refreshToken, token));
+  await db.delete(AuthXTokenSchema).where(eq(AuthXTokenSchema.refreshToken, token));
 }
