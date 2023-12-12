@@ -18,8 +18,17 @@
 
 import AuthenticationSchema from './Authentication.schema';
 import AuthXTokenSchema from './AuthXToken.schema';
+import BusinessProfileSchema from './BusinessProfile.schema';
+import BusinessRoleFunctionsSchema from './BusinessRoleFunctions.schema';
+import BusinessRolesSchema from './BusinessRoles.schema';
 
-const schemas = [AuthenticationSchema, AuthXTokenSchema];
+const schemas = [
+  AuthenticationSchema,
+  AuthXTokenSchema,
+  BusinessProfileSchema,
+  BusinessRoleFunctionsSchema,
+  BusinessRolesSchema,
+];
 const combinedSchema = schemas.reduce((acc, schema) => {
   const sym = Symbol.for('drizzle:BaseName');
   const name = schema[sym];
