@@ -5,7 +5,7 @@ export const AuthSchema = pgTable(
   'Authentication',
   {
     id: uuid('id').primaryKey().defaultRandom(),
-    email: text('email').unique(),
+    username: text('username').unique(),
     firstname: text('firstname'),
     lastname: text('lastname'),
     middlename: text('middlename'),
@@ -19,11 +19,11 @@ export const AuthSchema = pgTable(
   (table) => {
     return {
       idIdx: index('idIdx').on(table.id),
-      emailIdx: index('emailIdx').on(table.email),
+      usernameIdx: index('usernameIdx').on(table.username),
     };
   }
 );
 
-export type User = typeof AuthSchema.$inferSelect;
-export type NewUser = typeof AuthSchema.$inferInsert;
+export type AuthUser = typeof AuthSchema.$inferSelect;
+export type NewAuthUser = typeof AuthSchema.$inferInsert;
 export default AuthSchema;

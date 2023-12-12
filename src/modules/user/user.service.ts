@@ -1,14 +1,14 @@
 import { sql } from 'drizzle-orm';
 import { db } from '@/db';
-import { NewUser, User, AuthSchema } from '@/db/schema/Authentication.schema';
+import { NewAuthUser, AuthUser, AuthSchema } from '@/db/schema/Authentication.schema';
 
-export async function insertUser(newUser: NewUser) {
+export async function insertUser(newUser: NewAuthUser) {
   const userData = await db
     .insert(AuthSchema)
     .values(newUser)
     .returning({
       id: AuthSchema.id,
-      email: AuthSchema.email,
+      username: AuthSchema.username,
       firstname: AuthSchema.firstname,
       lastname: AuthSchema.lastname,
       middlename: AuthSchema.middlename,
@@ -20,8 +20,21 @@ export async function insertUser(newUser: NewUser) {
   return userData.pop();
 }
 
-export async function queryUserByEmail(email: string) {
-  return await db.execute<User>(
-    sql`SELECT * FROM ${AuthSchema} WHERE ${AuthSchema.email} = ${email}`
+export async function queryUserByEmail(username: string) {
+  return await db.execute<AuthUser>(
+    sql`SELECT * FROM ${AuthSchema} WHERE ${AuthSchema.username} = ${username}`
+  );
+}
+
+export async function queryUserId(userId: string) {
+  return await db.execute<AuthUser>(
+    sql`SELECT 
+      ${AuthSchema.id},
+      ${AuthSchema.username},
+      ${AuthSchema.firstname},
+      ${AuthSchema.lastname},
+      ${AuthSchema.updatedAt}, 
+      ${AuthSchema.createdAt}
+    FROM ${AuthSchema} WHERE ${AuthSchema.id} = ${userId}`
   );
 }

@@ -8,7 +8,7 @@ export const TokenManager = {
    * @param {string} userId - The user's unique identifier.
    */
   generateAccessToken: (userId: string) => {
-    return server.jwt.sign({ userId }, { expiresIn: '15mm' });
+    return server.jwt.sign({ userId }, { expiresIn: '5000' });
   },
 
   /**

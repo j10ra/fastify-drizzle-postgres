@@ -10,3 +10,12 @@ declare module 'fastify' {
     jwtVerify: any;
   }
 }
+
+declare module '@fastify/jwt' {
+  interface FastifyJWT {
+    payload: { userId: string };
+    user: {
+      userId: string;
+    };
+  }
+}

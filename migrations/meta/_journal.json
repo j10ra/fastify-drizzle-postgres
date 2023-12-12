@@ -57,6 +57,20 @@
       "when": 1702354144102,
       "tag": "0007_icy_stark_industries",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1702380364575,
+      "tag": "0008_cynical_forgotten_one",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1702380394325,
+      "tag": "0009_bent_kingpin",
+      "breakpoints": true
     }
   ]
 }

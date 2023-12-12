@@ -1,6 +1,6 @@
 import { sql } from 'drizzle-orm';
 import { pgTable, text, uuid, timestamp, boolean, index } from 'drizzle-orm/pg-core';
-import BusinessProfile from './BusinessProfile.schema';
+import BusinessProfile from './BusinessProfiles.schema';
 
 export const BusinessRole = pgTable(
   'BusinessRoles',
@@ -23,4 +23,4 @@ export const BusinessRole = pgTable(
 
 export type User = typeof BusinessProfile.$inferSelect;
 export type NewUser = typeof BusinessProfile.$inferInsert;
-export default BusinessProfile;
+export default BusinessRole;

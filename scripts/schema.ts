@@ -1,21 +1,21 @@
 import fs from 'fs';
 import path from 'path';
 
-// Directory where the schema files are located
 const schemaDirectoryPath = path.join(__dirname, '../src/db/schema');
-const outputFile = path.join(schemaDirectoryPath, 'index.ts'); // Output file as index.ts
+const outputFile = path.join(schemaDirectoryPath, 'index.ts');
 
 const files = fs.readdirSync(schemaDirectoryPath);
 
 const imports: string[] = [];
-const schemaNames: string[] = [];
+const combinedSchema: string[] = [];
 
 files.forEach((file) => {
   if (file.endsWith('.schema.ts') && file !== 'index.ts') {
-    const schemaName = file.replace('.schema.ts', 'Schema');
+    const baseName = file.replace('.schema.ts', '');
+    const schemaName = `${baseName}Schema`;
 
-    imports.push(`import ${schemaName} from './${file.replace('.ts', '')}';`);
-    schemaNames.push(schemaName);
+    imports.push(`import ${schemaName} from './${baseName}.schema';`);
+    combinedSchema.push(`${baseName}: ${schemaName}`);
   }
 });
 
@@ -39,16 +39,19 @@ const outputContent = `/**
 
 ${imports.join('\n')}
 
-const schemas = [${schemaNames.join(', ')}];
-const combinedSchema = schemas.reduce((acc, schema) => {
-  const sym = Symbol.for('drizzle:BaseName');
+const sym = Symbol.for('drizzle:BaseName');
+const combinedSchema = {
+  ${combinedSchema.join(',\n  ')},
+};
+
+Object.keys(combinedSchema).forEach((key: string) => {
+  const schema = combinedSchema[key];
   const name = schema[sym];
 
-  return {
-    ...acc,
-    [name]: schema,
-  };
-}, {});
+  if (key !== name) {
+    throw new Error(\`Schema name mismatch: "\${key}" !== "\${name}" table name.\`);
+  }
+});
 
 export default combinedSchema;
 `;

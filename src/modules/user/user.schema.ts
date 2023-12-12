@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { Utils } from '@/factory/Utils';
 
 const createUser = z.object({
-  email: z.string({ required_error: 'Username is required' }).email(),
+  username: z.string({ required_error: 'Username is required' }).email(),
   firstname: z.string({ required_error: 'First name is required' }).min(1),
   lastname: z.string({ required_error: 'Last name is required' }).min(1),
   middlename: z.string().optional(),

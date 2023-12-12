@@ -21,7 +21,7 @@ process.on('unhandledRejection', (err) => {
 const startServer = async () => {
   try {
     await server.ready();
-    await server.listen({ port });
+    await server.listen({ port, host: '0.0.0.0' });
     console.log(`Server running at port: ${port}`);
   } catch (err) {
     console.error('Failed to start server', err);

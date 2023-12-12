@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import LogSql from '../factory/LoggerSql';
-import * as schema from './schema';
+import schema from './schema';
 
 const dbName = process.env.DB_NAME || 'database';
 const dbUser = process.env.DB_USER || 'username';

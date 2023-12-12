@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { Utils } from '@/factory/Utils';
 
 const login = z.object({
-  email: z.string().email(),
+  username: z.string().email(),
   password: z.string({ required_error: 'Password is required' }).min(6),
 });
 
@@ -25,3 +25,8 @@ const logoutInput = z.object({
 
 export const logoutInputSchema = Utils.schemaHelper({ body: logoutInput }, ['Auth']);
 export type LogoutInput = z.infer<typeof logoutInput>;
+
+const verifyTokenInput = z.object({});
+
+export const verifyTokenInputSchema = Utils.schemaHelper({}, ['Auth']);
+export type VerifyTokenInput = z.infer<typeof verifyTokenInput>;

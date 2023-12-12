@@ -17,7 +17,7 @@ export const createUser = Controller<{ Body: CreateUserInput }>(async (req, repl
   };
 
   Debug.log(req, { message: 'validate username' });
-  const users = await queryUserByEmail(body.email);
+  const users = await queryUserByEmail(body.username);
 
   if (users.count >= 1) {
     throw new HttpBadRequestError('Username is already taken');

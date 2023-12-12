@@ -16,27 +16,28 @@
  * use `npm run schema:generate` to regenerate this file
  */
 
-import AuthenticationSchema from './Authentication.schema';
 import AuthXTokenSchema from './AuthXToken.schema';
-import BusinessProfileSchema from './BusinessProfile.schema';
+import AuthenticationSchema from './Authentication.schema';
+import BusinessProfilesSchema from './BusinessProfiles.schema';
 import BusinessRoleFunctionsSchema from './BusinessRoleFunctions.schema';
 import BusinessRolesSchema from './BusinessRoles.schema';
 
-const schemas = [
-  AuthenticationSchema,
-  AuthXTokenSchema,
-  BusinessProfileSchema,
-  BusinessRoleFunctionsSchema,
-  BusinessRolesSchema,
-];
-const combinedSchema = schemas.reduce((acc, schema) => {
-  const sym = Symbol.for('drizzle:BaseName');
+const sym = Symbol.for('drizzle:BaseName');
+const combinedSchema = {
+  AuthXToken: AuthXTokenSchema,
+  Authentication: AuthenticationSchema,
+  BusinessProfiles: BusinessProfilesSchema,
+  BusinessRoleFunctions: BusinessRoleFunctionsSchema,
+  BusinessRoles: BusinessRolesSchema,
+};
+
+Object.keys(combinedSchema).forEach((key: string) => {
+  const schema = combinedSchema[key];
   const name = schema[sym];
 
-  return {
-    ...acc,
-    [name]: schema,
-  };
-}, {});
+  if (key !== name) {
+    throw new Error(`Schema name mismatch: "${key}" !== "${name}" table name.`);
+  }
+});
 
 export default combinedSchema;
