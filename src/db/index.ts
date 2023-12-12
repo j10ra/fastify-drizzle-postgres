@@ -1,6 +1,6 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import LogSql from '@/factory/LoggerSql';
+import LogSql from '../factory/LoggerSql';
 import * as schema from './schema';
 
 const dbName = process.env.DB_NAME || 'database';

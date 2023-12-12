@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import './src/config/env.config';
 import type { Config } from 'drizzle-kit';
 
 const dbName = process.env.DB_NAME || 'database';
