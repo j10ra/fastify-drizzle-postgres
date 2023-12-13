@@ -1,3 +1,4 @@
+import path from 'path';
 import fastify from 'fastify';
 import { errorHandler } from './middleware/errorHandler';
 import { getLoggerOptions, registerServiceLogger } from './config/logger.config';
@@ -19,6 +20,10 @@ const server = fastify({
 server.register(require('@fastify/formbody'));
 server.register(require('@fastify/helmet'));
 server.register(require('@fastify/cors'));
+server.register(require('@fastify/static'), {
+  root: path.join(__dirname, '../public'),
+  prefix: '/public/',
+});
 
 registerAuthDecorator(server);
 registerSwagger(server);

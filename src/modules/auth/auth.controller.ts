@@ -12,6 +12,7 @@ import {
 import { Controller } from '@/factory/Controller';
 import { TokenManager } from '@/factory/TokenManager';
 import ResponseData from '@/factory/ResponseData';
+import Debug from '@/factory/LoggerDebug';
 
 export async function loginHandler(req: FastifyRequest<{ Body: LoginInput }>, reply: FastifyReply) {
   const { username, password }: LoginInput = req.body;
@@ -28,6 +29,7 @@ export async function loginHandler(req: FastifyRequest<{ Body: LoginInput }>, re
     throw new HttpUnauthorizedError();
   }
 
+  Debug.log(req, { message: 'User logged in success!' });
   const accessToken = TokenManager.generateAccessToken(user.id);
   const refreshToken = await insertRefreshToken(user.id);
   const payload = {
@@ -48,7 +50,6 @@ export const refreshTokenHandler = Controller<{ Body: RefreshTokenInput }>(async
 
   const verifiedUser = users.shift();
 
-  // update refresh token
   await updateRefreshToken(verifiedUser.id);
   return new ResponseData(reply, TokenManager.generateAccessToken(verifiedUser.userProfileId));
 });
@@ -64,6 +65,10 @@ export const logoutHandler = Controller<{ Body: LogoutInput }>(async (req, reply
 
 export async function verifyTokenHandler(req: FastifyRequest, reply: FastifyReply) {
   const user = await queryUserId(req.user.userId);
+
+  if (user.count === 0) {
+    throw new HttpUnauthorizedError();
+  }
 
   return new ResponseData(reply, user.pop());
 }

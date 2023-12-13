@@ -14,6 +14,11 @@ This is a Fastify API project with automatic Swagger documentation and request s
 - Drizzle ORM
 - PostgreSQL
 
+## Prerequisite
+
+- Node 18
+- Docker
+
 ### Getting Started
 
 1. Clone the repository
@@ -41,6 +46,14 @@ npm run start
 ```
 
 #### Start development mode
+
+1. Initialize Postgres DB
+
+```
+docker-compose up -d
+```
+
+2. Start development
 
 ```
 npm run dev

@@ -1,6 +1,8 @@
+import { sql } from 'drizzle-orm';
 import { FastifyInstance } from 'fastify';
-import { HttpBadRequestError } from '@/factory/ServerError';
 import ResponseData from '@/factory/ResponseData';
+
+import { db } from '@/db';
 
 const swaggerOptions = {
   swagger: {
@@ -40,17 +42,12 @@ export default function registerSwagger(server: FastifyInstance) {
   server.register(require('@fastify/swagger-ui'), swaggerUiOptions);
 
   server.get('/', (_request, reply) => {
-    return new ResponseData(reply, { name: 'fastify-api' });
+    // @ts-ignore
+    return reply.sendFile('index.html');
   });
 
   server.get('/health-check', async (_request, reply) => {
-    try {
-      // TODO: add db health check
-      // await utils.healthCheck();
-
-      return new ResponseData(reply, 'ok');
-    } catch (e) {
-      throw new HttpBadRequestError(e);
-    }
+    await db.execute(sql`SELECT 1 + 1 AS result`);
+    return new ResponseData(reply, 'ok');
   });
 }

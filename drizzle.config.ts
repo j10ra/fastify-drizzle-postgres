@@ -16,4 +16,6 @@ export default {
     password: dbPassword,
     database: dbName,
   },
+  verbose: true,
+  strict: true,
 } satisfies Config;

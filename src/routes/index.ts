@@ -1,13 +1,14 @@
 import { RouteConfig } from 'types/RouteConfig';
 import version1Routes from './v1.routes';
+import Logger from '@/factory/Logger';
 
 export default function registerRoutes(server) {
   function loadVersionedRoutes(routes: RouteConfig[], version: string) {
     routes.forEach(({ route, prefix }) => {
       try {
-        server.register(route, { prefix: `/${version}${prefix}` });
+        server.register(route, { prefix: `api/${version}${prefix}` });
       } catch (error) {
-        console.error(`Error registering routes for version ${version}:`, error);
+        Logger.error(`Error registering routes for version ${version}:`, error);
       }
     });
   }

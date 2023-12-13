@@ -31,6 +31,7 @@ module.exports = {
     'class-methods-use-this': 0,
     'lines-between-class-members': 0,
     'import/no-extraneous-dependencies': 0,
+    '@typescript-eslint/ban-ts-comment': 0,
     'padding-line-between-statements': [
       'warn',
       { blankLine: 'always', prev: 'const', next: '*' },

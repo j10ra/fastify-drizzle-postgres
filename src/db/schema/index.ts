@@ -16,19 +16,13 @@
  * use `npm run schema:generate` to regenerate this file
  */
 
-import AuthXTokenSchema from './AuthXToken.schema';
 import AuthenticationSchema from './Authentication.schema';
-import BusinessProfilesSchema from './BusinessProfiles.schema';
-import BusinessRoleFunctionsSchema from './BusinessRoleFunctions.schema';
-import BusinessRolesSchema from './BusinessRoles.schema';
+import AuthXTokenSchema from './AuthXToken.schema';
 
 const sym = Symbol.for('drizzle:BaseName');
 const combinedSchema = {
-  AuthXToken: AuthXTokenSchema,
   Authentication: AuthenticationSchema,
-  BusinessProfiles: BusinessProfilesSchema,
-  BusinessRoleFunctions: BusinessRoleFunctionsSchema,
-  BusinessRoles: BusinessRolesSchema,
+  AuthXToken: AuthXTokenSchema,
 };
 
 Object.keys(combinedSchema).forEach((key: string) => {
