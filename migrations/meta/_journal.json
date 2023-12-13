@@ -5,71 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1702035792455,
-      "tag": "0000_odd_bloodstorm",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1702119250594,
-      "tag": "0001_sudden_vanisher",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1702190711297,
-      "tag": "0002_futuristic_cobalt_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1702190799320,
-      "tag": "0003_groovy_ikaris",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1702252268369,
-      "tag": "0004_ancient_nightshade",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1702349659000,
-      "tag": "0005_faulty_ogun",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "5",
-      "when": 1702353079950,
-      "tag": "0006_open_iron_patriot",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "5",
-      "when": 1702354144102,
-      "tag": "0007_icy_stark_industries",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "5",
-      "when": 1702380364575,
-      "tag": "0008_cynical_forgotten_one",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "5",
-      "when": 1702380394325,
-      "tag": "0009_bent_kingpin",
+      "when": 1702434267387,
+      "tag": "0000_stiff_vivisector",
       "breakpoints": true
     }
   ]

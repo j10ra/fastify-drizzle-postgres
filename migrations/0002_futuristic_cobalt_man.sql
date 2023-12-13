@@ -1,1 +1,0 @@
-ALTER TABLE "UserXToken" ADD COLUMN "helloworld" varchar DEFAULT 'helloworld';

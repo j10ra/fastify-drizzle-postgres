@@ -1,11 +1,11 @@
 {
-  "id": "ef30bed4-c7f5-4391-8df6-006821d23433",
+  "id": "5b367f70-61df-4dbf-9d30-ad599f8493d3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
   "tables": {
-    "Users": {
-      "name": "Users",
+    "Authentication": {
+      "name": "Authentication",
       "schema": "",
       "columns": {
         "id": {
@@ -15,8 +15,8 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "email": {
-          "name": "email",
+        "username": {
+          "name": "username",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -39,6 +39,18 @@
           "primaryKey": false,
           "notNull": false
         },
+        "birthYear": {
+          "name": "birthYear",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gender": {
+          "name": "gender",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "password": {
           "name": "password",
           "type": "text",
@@ -51,36 +63,51 @@
           "primaryKey": false,
           "notNull": false
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
           "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAat": {
+          "name": "updatedAat",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
           "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "idIdx": {
+          "name": "idIdx",
+          "columns": [
+            "id"
+          ],
+          "isUnique": false
+        },
+        "usernameIdx": {
+          "name": "usernameIdx",
+          "columns": [
+            "username"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "Users_email_unique": {
-          "name": "Users_email_unique",
+        "Authentication_username_unique": {
+          "name": "Authentication_username_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "email"
+            "username"
           ]
         }
       }
     },
-    "UserXToken": {
-      "name": "UserXToken",
+    "AuthXToken": {
+      "name": "AuthXToken",
       "schema": "",
       "columns": {
         "id": {
@@ -90,47 +117,55 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "refresh_token": {
-          "name": "refresh_token",
+        "refreshToken": {
+          "name": "refreshToken",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "user_profile_id": {
-          "name": "user_profile_id",
+        "userProfileId": {
+          "name": "userProfileId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
           "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "updatedAt": {
+          "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
           "default": "(CURRENT_TIMESTAMP AT TIME ZONE 'UTC')"
         },
-        "last_used_at": {
-          "name": "last_used_at",
+        "lastUsedAt": {
+          "name": "lastUsedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "refreshTokenIdx": {
+          "name": "refreshTokenIdx",
+          "columns": [
+            "refreshToken"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
-        "UserXToken_user_profile_id_Users_id_fk": {
-          "name": "UserXToken_user_profile_id_Users_id_fk",
-          "tableFrom": "UserXToken",
-          "tableTo": "Users",
+        "AuthXToken_userProfileId_Authentication_id_fk": {
+          "name": "AuthXToken_userProfileId_Authentication_id_fk",
+          "tableFrom": "AuthXToken",
+          "tableTo": "Authentication",
           "columnsFrom": [
-            "user_profile_id"
+            "userProfileId"
           ],
           "columnsTo": [
             "id"
