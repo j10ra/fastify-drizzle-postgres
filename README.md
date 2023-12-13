@@ -1,6 +1,6 @@
 # Build a Rest API with Fastify and Drizzle
 
-This is a Fastify API project with automatic Swagger documentation and request schema validation. It uses Drizzle ORM for database operations and PostgreSQL as the database.
+This is a Fastify API project with automatic Swagger documentation and request schema validation. It uses Drizzle ORM for database operations and PostgreSQL as the database written in typescript.
 
 ## Features
 
